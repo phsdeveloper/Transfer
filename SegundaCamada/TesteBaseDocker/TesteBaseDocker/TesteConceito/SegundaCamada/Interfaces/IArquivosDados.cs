@@ -19,7 +19,7 @@ public interface IConteudo
     List<Link> links { get; set; }
     string id { get; set; }
     string tipo { get; set; }
-    [JsonConverter(typeof(InterfaceConverter<IArquivo, Arquivo>))]
+    [JsonConverter(typeof(InterfaceConverterList<IArquivo, Arquivo>))]
     List<IArquivo> arquivos { get; set; }
 
 }

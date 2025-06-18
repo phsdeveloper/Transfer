@@ -98,7 +98,7 @@ public class Execucao
           new SegundaCamada_ConteudoConverterGenerico<Conteudo>(),
           //new SegundaCamada_ArquivoConverterGenerico<Arquivo>(),
           //new SegundaCamada_ArquivosDados<ArquivosDados>(),
-          new InterfaceConverter<IArquivo, Arquivo>(),
+          new InterfaceConverterList<IArquivo, Arquivo>(),
         }
       };
 
