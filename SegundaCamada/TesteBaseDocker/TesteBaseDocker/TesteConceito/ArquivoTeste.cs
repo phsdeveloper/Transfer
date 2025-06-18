@@ -2,8 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace TesteBaseDocker.TesteConceito;
 
+
 public class ArquivoTeste : IArquivoTeste
 {
+
     public string Nome { get; set; }
     public int Idade { get; set; }
     public IConta Conta { get; set; }

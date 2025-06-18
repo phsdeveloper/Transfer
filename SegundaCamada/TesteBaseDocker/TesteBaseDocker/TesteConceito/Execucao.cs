@@ -108,6 +108,7 @@ public class Execucao
       Console.WriteLine($"Data Vinculo: {arquivosDados.data_vinculo}");
       Console.WriteLine($"Conteudo ID: {arquivosDados.Conteudo.id}");
       Console.WriteLine($"Conteudo Tipo: {arquivosDados.Conteudo.tipo}");
+      arquivosDados.Conteudo.links.ForEach(link => System.Console.WriteLine($"Link HREF: {link.href}, Rel: {link.rel}, Type: {link.type}"));
 
       //foreach (var arquivo in arquivosDados.Conteudo.arquivos)
       //{

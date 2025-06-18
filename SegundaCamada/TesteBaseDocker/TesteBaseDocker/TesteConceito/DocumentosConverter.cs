@@ -128,16 +128,17 @@ public class SegundaCamada_ConteudoConverterGenerico<T> : JsonConverter<IConteud
     }
 }
 
-public class SegundaCamada_ArquivoConverterGenerico<T> : JsonConverter<IArquivo> where T : class, IArquivo, new()
+
+public class SegundaCamada_ArquivoConverterGenerico<T> : JsonConverter<List<IArquivo>>
 {
-    public override IArquivo ReadJson(JsonReader reader, Type objectType, IArquivo existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override List<IArquivo> ReadJson(JsonReader reader, Type objectType, List<IArquivo> existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        var jsonObject = Newtonsoft.Json.Linq.JObject.Load(reader);
-        return jsonObject.ToObject<T>();
+        var list = serializer.Deserialize<List<T>>(reader);
+        return list?.Cast<IArquivo>().ToList();
     }
 
-    public override void WriteJson(JsonWriter writer, IArquivo value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, List<IArquivo> value, JsonSerializer serializer)
     {
-        serializer.Serialize(writer, (ArquivosDados)value);
+        serializer.Serialize(writer, value);
     }
 }
