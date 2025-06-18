@@ -97,27 +97,31 @@ public class Execucao
           //new SegundaCamada_ArquivosDadosConverterGenerico<ArquivosDados>(),
           new SegundaCamada_ConteudoConverterGenerico<Conteudo>(),
           //new SegundaCamada_ArquivoConverterGenerico<Arquivo>(),
-          //new SegundaCamada_ArquivosDados<ArquivosDados>()
+          //new SegundaCamada_ArquivosDados<ArquivosDados>(),
+          new InterfaceConverter<IArquivo, Arquivo>(),
         }
       };
 
       IArquivosDados arquivosDados = JsonConvert.DeserializeObject<ArquivosDados>(st_json, settings);
+      System.Console.WriteLine($" - Listando dados: {DateTime.Now:dd/MM/yyyy HH:mm:ss}");
+      Console.WriteLine($"    ID Vinculo: {arquivosDados.id_vinculo}");
+      Console.WriteLine($"    ID Processo: {arquivosDados.id_processo}");
+      Console.WriteLine($"    Data Vinculo: {arquivosDados.data_vinculo}");
+      Console.WriteLine($"    Conteudo ID: {arquivosDados.Conteudo.id}");
+      Console.WriteLine($"    Conteudo Tipo: {arquivosDados.Conteudo.tipo}");
+      Console.WriteLine($"    - Conteudo da propriedade Conteudo:");
+      arquivosDados.Conteudo.links.ForEach(link => System.Console.WriteLine($"       {arquivosDados.Conteudo.links.IndexOf(link) + 1}) Link HREF: {link.href}, Rel: {link.rel}, Type: {link.type}"));
 
-      Console.WriteLine($"ID Vinculo: {arquivosDados.id_vinculo}");
-      Console.WriteLine($"ID Processo: {arquivosDados.id_processo}");
-      Console.WriteLine($"Data Vinculo: {arquivosDados.data_vinculo}");
-      Console.WriteLine($"Conteudo ID: {arquivosDados.Conteudo.id}");
-      Console.WriteLine($"Conteudo Tipo: {arquivosDados.Conteudo.tipo}");
-      arquivosDados.Conteudo.links.ForEach(link => System.Console.WriteLine($"Link HREF: {link.href}, Rel: {link.rel}, Type: {link.type}"));
-
-      //foreach (var arquivo in arquivosDados.Conteudo.arquivos)
-      //{
-      //    Console.WriteLine($"Arquivo ID: {arquivo.id_arquivo}, Nome: {arquivo.nome}");
-      //    foreach (var link in arquivo.links)
-      //    {
-      //        Console.WriteLine($"Link HREF: {link.href}, Rel: {link.rel}, Type: {link.type}");
-      //    }
-      //}
+      Console.WriteLine($"    - Conteudo da propriedade arquivos:");
+      foreach (var arquivo in arquivosDados.Conteudo.arquivos)
+      {
+        Console.WriteLine($"        {arquivosDados.Conteudo.arquivos.IndexOf(arquivo) + 1}) Arquivo ID: {arquivo.id_arquivo}, Nome: {arquivo.nome}");
+        Console.WriteLine($"        - Conteudo da propriedade links:");
+        foreach (var link in arquivo.links)
+        {
+          Console.WriteLine($"           {arquivo.links.IndexOf(link) + 1}) Link HREF: {link.href}, Rel: {link.rel}, Type: {link.type}");
+        }
+      }
 
       bool bl_pausar = true;
     }

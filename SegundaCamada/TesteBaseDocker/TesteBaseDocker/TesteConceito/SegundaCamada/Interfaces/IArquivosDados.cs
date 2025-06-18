@@ -1,3 +1,6 @@
+
+using Newtonsoft.Json;
+
 namespace TesteBaseDocker.TesteConceito.SegundaCamada.Interfaces;
 
 public interface IArquivosDados
@@ -16,7 +19,8 @@ public interface IConteudo
     List<Link> links { get; set; }
     string id { get; set; }
     string tipo { get; set; }
-    //List<IArquivo> arquivos { get; set; }
+    [JsonConverter(typeof(InterfaceConverter<IArquivo, Arquivo>))]
+    List<IArquivo> arquivos { get; set; }
 
 }
 
@@ -37,7 +41,7 @@ public class Conteudo : IConteudo
     public List<Link> links { get; set; }
     public string id { get; set; }
     public string tipo { get; set; }
-    //public List<IArquivo> arquivos { get; set; }
+    public List<IArquivo> arquivos { get; set; }
 }
 
 public class Link
@@ -61,3 +65,6 @@ public class ArquivosDados : IArquivosDados
     public DateTime data_vinculo { get; set; }
     public IConteudo Conteudo { get; set; }
 }
+
+
+

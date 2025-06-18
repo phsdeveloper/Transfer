@@ -142,3 +142,29 @@ public class SegundaCamada_ArquivoConverterGenerico<T> : JsonConverter<List<IArq
         serializer.Serialize(writer, value);
     }
 }
+/// <summary>
+/// Teste mais generico
+/// </summary>
+/// <typeparam name="TInterface"></typeparam>
+/// <typeparam name="TConcrete"></typeparam>
+public class InterfaceConverter<TInterface, TConcrete> : JsonConverter
+  where TConcrete : TInterface, new()
+{
+    public override bool CanConvert(Type objectType) =>
+      objectType == typeof(TInterface)
+      || objectType == typeof(List<TInterface>);
+
+    public override object ReadJson(JsonReader reader, Type objectType,
+      object existingValue, JsonSerializer serializer)
+    {
+        if (typeof(IEnumerable<TInterface>).IsAssignableFrom(objectType))
+        {
+            var lista = serializer.Deserialize<List<TConcrete>>(reader);
+            return lista.Cast<TInterface>().ToList();
+        }
+        return serializer.Deserialize<TConcrete>(reader);
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
+      serializer.Serialize(writer, value);
+}
