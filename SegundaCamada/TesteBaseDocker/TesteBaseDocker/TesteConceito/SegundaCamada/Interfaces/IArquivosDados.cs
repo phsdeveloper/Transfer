@@ -17,6 +17,7 @@ public interface IConteudo
     string id { get; set; }
     string tipo { get; set; }
     //List<IArquivo> arquivos { get; set; }
+
 }
 
 
