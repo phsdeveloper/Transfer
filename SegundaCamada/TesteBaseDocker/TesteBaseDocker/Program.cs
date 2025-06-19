@@ -5,7 +5,7 @@ Console.WriteLine("Hello, World!");
 //TesteBaseDocker.TesteConceito.Execucao.MTD_Executar();
 try
 {
-    TesteBaseDocker.TesteConceito.Execucao.ExecutarSegundaCamda();
+    TesteBaseDocker.TesteConceito.Execucao.ExecutarSegundaCamda(TesteBaseDocker.TesteConceito.versao.Versao2);
 }
 catch (Exception ex)
 {

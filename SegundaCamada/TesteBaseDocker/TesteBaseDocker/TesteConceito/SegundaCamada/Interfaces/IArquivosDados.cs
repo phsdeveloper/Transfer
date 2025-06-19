@@ -19,7 +19,7 @@ public interface IConteudo
     List<Link> links { get; set; }
     string id { get; set; }
     string tipo { get; set; }
-    [JsonConverter(typeof(InterfaceConverterList<IArquivo, Arquivo>))]
+
     List<IArquivo> arquivos { get; set; }
 
 }
@@ -41,6 +41,17 @@ public class Conteudo : IConteudo
     public List<Link> links { get; set; }
     public string id { get; set; }
     public string tipo { get; set; }
+    [JsonConverter(typeof(InterfaceConverterList<IArquivo, Arquivo>))]
+    public List<IArquivo> arquivos { get; set; }
+}
+
+public class Conteudo2 : IConteudo
+{
+    public List<Link> links { get; set; }
+    public string id { get; set; }
+    public string tipo { get; set; }
+    [JsonProperty("arquivoNovo")]
+    [JsonConverter(typeof(InterfaceConverterList<IArquivo, Arquivo>))]
     public List<IArquivo> arquivos { get; set; }
 }
 

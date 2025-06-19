@@ -2,6 +2,12 @@ using Newtonsoft.Json;
 using TesteBaseDocker.TesteConceito.SegundaCamada.Interfaces;
 namespace TesteBaseDocker.TesteConceito;
 
+public enum versao
+{
+  Versao1 = 1,
+  Versao2 = 2,
+}
+
 public class Execucao
 {
   public static void MTD_Executar()
@@ -39,68 +45,45 @@ public class Execucao
   }
 
 
-  public static void ExecutarSegundaCamda()
+  public static void ExecutarSegundaCamda(versao versao = versao.Versao1)
   {
     try
     {
-      string st_json = @"{
-  ""id_vinculo"": ""123456"",
-  ""id_processo"": ""987654"",
-  ""data_vinculo"": ""2025-06-18T15:53:00"",
-  ""Conteudo"": {
-    ""id"": ""CONT001"",
-    ""tipo"": ""Documento"",
-    ""links"": [
+      // Obtém o caminho da pasta "Arquivos" na raiz do projeto
+      string st_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory.Replace(@"bin/Debug/net6.0", @"TesteConceito/Arquivos"), $"{(versao == versao.Versao1 ? "Versao01" : "Versao02")}.json");
+      if (File.Exists(st_path) == false)
       {
-        ""href"": ""https://example.com/doc1"",
-        ""rel"": ""self"",
-        ""type"": ""application/pdf""
-      },
-      {
-        ""href"": ""https://example.com/doc2"",
-        ""rel"": ""related"",
-        ""type"": ""application/pdf""
+        Console.WriteLine($"Arquivo não encontrado: {st_path}");
+        return;
       }
-    ],
-    ""arquivos"": [
-      {
-        ""id_arquivo"": ""ARQ001"",
-        ""nome"": ""Arquivo1.pdf"",
-        ""links"": [
-          {
-            ""href"": ""https://example.com/arq1"",
-            ""rel"": ""self"",
-            ""type"": ""application/pdf""
-          }
-        ]
-      },
-      {
-        ""id_arquivo"": ""ARQ002"",
-        ""nome"": ""Arquivo2.pdf"",
-        ""links"": [
-          {
-            ""href"": ""https://example.com/arq2"",
-            ""rel"": ""self"",
-            ""type"": ""application/pdf""
-          }
-        ]
-      }
-    ]
-  }
-}
-";
 
-      JsonSerializerSettings settings = new JsonSerializerSettings
+      string st_json = File.ReadAllText(st_path);
+      System.Console.WriteLine($" - Lendo arquivo JSON: {st_path}");
+      System.Console.WriteLine($" - Data Leitura: {DateTime.Now:dd/MM/yyyy HH:mm:ss}");
+
+      // JsonSerializerSettings settings = new JsonSerializerSettings
+      // {
+      //   Converters = new List<JsonConverter>
+      //   {
+      //     //new SegundaCamada_ArquivosDadosConverterGenerico<ArquivosDados>(),
+      //     new SegundaCamada_ConteudoConverterGenerico<Conteudo>(),
+      //     //new SegundaCamada_ArquivoConverterGenerico<Arquivo>(),
+      //     //new SegundaCamada_ArquivosDados<ArquivosDados>(),
+      //     new InterfaceConverterList<IArquivo, Arquivo>(),
+      //   }
+      // };
+      JsonSerializerSettings settings = new JsonSerializerSettings();
+
+      //settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo>());
+      if (versao == versao.Versao2)
       {
-        Converters = new List<JsonConverter>
-        {
-          //new SegundaCamada_ArquivosDadosConverterGenerico<ArquivosDados>(),
-          new SegundaCamada_ConteudoConverterGenerico<Conteudo>(),
-          //new SegundaCamada_ArquivoConverterGenerico<Arquivo>(),
-          //new SegundaCamada_ArquivosDados<ArquivosDados>(),
-          new InterfaceConverterList<IArquivo, Arquivo>(),
-        }
-      };
+        settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo2>());
+      }
+      else
+      {
+        settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo>());
+      }
+      settings.Converters.Add(new InterfaceConverterList<IArquivo, Arquivo>());
 
       IArquivosDados arquivosDados = JsonConvert.DeserializeObject<ArquivosDados>(st_json, settings);
       System.Console.WriteLine($" - Listando dados: {DateTime.Now:dd/MM/yyyy HH:mm:ss}");

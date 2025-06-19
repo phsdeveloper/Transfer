@@ -1,0 +1,45 @@
+{
+    "id_vinculo": "123456",
+    "id_processo": "987654",
+    "data_vinculo": "2025-06-18T15:53:00",
+    "Conteudo": {
+        "id": "CONT001",
+        "tipo": "Documento",
+        "links": [
+            {
+                "href": "https://example.com/doc1",
+                "rel": "self",
+                "type": "application/pdf"
+            },
+            {
+                "href": "https://example.com/doc2",
+                "rel": "related",
+                "type": "application/pdf"
+            }
+        ],
+        "arquivos": [
+            {
+                "id_arquivo": "ARQ001",
+                "nome": "Arquivo1.pdf",
+                "links": [
+                    {
+                        "href": "https://example.com/arq1",
+                        "rel": "self",
+                        "type": "application/pdf"
+                    }
+                ]
+            },
+            {
+                "id_arquivo": "ARQ002",
+                "nome": "Arquivo2.pdf",
+                "links": [
+                    {
+                        "href": "https://example.com/arq2",
+                        "rel": "self",
+                        "type": "application/pdf"
+                    }
+                ]
+            }
+        ]
+    }
+}
