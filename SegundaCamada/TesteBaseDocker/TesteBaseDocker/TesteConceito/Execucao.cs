@@ -77,11 +77,14 @@ public class Execucao
       //settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo>());
       if (versao == versao.Versao2)
       {
-        settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo2>());
+        //settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo2>());
+        settings.Converters.Add(new InterfaceConverterList<IConteudo, Conteudo2>());
+
       }
       else
       {
-        settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo>());
+        //settings.Converters.Add(new SegundaCamada_ConteudoConverterGenerico<Conteudo>());
+        settings.Converters.Add(new InterfaceConverterList<IConteudo, Conteudo>());
       }
       settings.Converters.Add(new InterfaceConverterList<IArquivo, Arquivo>());
 

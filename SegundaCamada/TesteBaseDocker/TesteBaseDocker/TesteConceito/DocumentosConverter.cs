@@ -100,74 +100,7 @@ public class ContaConverterGenerico<T> : JsonConverter<IConta> where T : class, 
 }
 
 
-public class SegundaCamada_ArquivosDadosConverterGenerico<T> : JsonConverter<IArquivosDados> where T : class, IArquivosDados, new()
-{
-    public override IArquivosDados ReadJson(JsonReader reader, Type objectType, IArquivosDados existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-        var jsonObject = Newtonsoft.Json.Linq.JObject.Load(reader);
-        return jsonObject.ToObject<T>();
-    }
 
-    public override void WriteJson(JsonWriter writer, IArquivosDados value, JsonSerializer serializer)
-    {
-        serializer.Serialize(writer, (ArquivosDados)value);
-    }
-}
-
-public class SegundaCamada_ConteudoConverterGenerico<T> : JsonConverter<IConteudo> where T : class, IConteudo, new()
-{
-    public override IConteudo ReadJson(JsonReader reader, Type objectType, IConteudo existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-        var jsonObject = Newtonsoft.Json.Linq.JObject.Load(reader);
-        return jsonObject.ToObject<T>();
-    }
-
-    public override void WriteJson(JsonWriter writer, IConteudo value, JsonSerializer serializer)
-    {
-        serializer.Serialize(writer, (ArquivosDados)value);
-    }
-}
-
-
-public class SegundaCamada_ArquivoConverterGenerico<T> : JsonConverter<List<IArquivo>>
-{
-    public override List<IArquivo> ReadJson(JsonReader reader, Type objectType, List<IArquivo> existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-        var list = serializer.Deserialize<List<T>>(reader);
-        return list?.Cast<IArquivo>().ToList();
-    }
-
-    public override void WriteJson(JsonWriter writer, List<IArquivo> value, JsonSerializer serializer)
-    {
-        serializer.Serialize(writer, value);
-    }
-}
-/// <summary>
-/// Teste mais generico
-/// </summary>
-/// <typeparam name="TInterface"></typeparam>
-/// <typeparam name="TConcrete"></typeparam>
-//public class InterfaceConverterList<TInterface, TConcrete> : JsonConverter
-//  where TConcrete : TInterface, new()
-//{
-//    public override bool CanConvert(Type objectType) =>
-//      objectType == typeof(TInterface)
-//      || objectType == typeof(List<TInterface>);
-//
-//    public override object ReadJson(JsonReader reader, Type objectType,
-//      object existingValue, JsonSerializer serializer)
-//    {
-//        if (typeof(IEnumerable<TInterface>).IsAssignableFrom(objectType))
-//        {
-//            var lista = serializer.Deserialize<List<TConcrete>>(reader);
-//            return lista.Cast<TInterface>().ToList();
-//        }
-//        return serializer.Deserialize<TConcrete>(reader);
-//    }
-//
-//    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
-//      serializer.Serialize(writer, value);
-//}
 
 public class InterfaceConverterList<TInterface, TConcrete> : JsonConverter
   where TConcrete : TInterface, new()
